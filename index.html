@@ -42,6 +42,16 @@ header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
 .tools input[type=search]{border:1px solid var(--ring);border-radius:10px;padding:7px 10px;font:inherit;font-size:12.5px;background:var(--surface);color:var(--ink-2);min-width:220px}
 .tools label.chk{font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--ring);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--cyan);color:#fff}
+.tools input[type=date]{border:1px solid var(--ring);border-radius:10px;padding:7px 10px;font:inherit;font-size:12.5px;background:var(--surface);color:var(--ink-2)}
+.tools .per-lbl{font-size:12px;color:var(--muted)} .tools .per-lbl b{color:var(--ink-2)}
+.rail-t{font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:0 0 6px}
+.rs tr.grp th{text-align:center;font-size:10px;color:var(--ink-2);border-bottom:0;padding-bottom:2px}
+.rs tr.grp th.g-now{background:rgba(15,23,42,.035);border-radius:8px 8px 0 0}
+.rs tr.grp th.g-per{background:rgba(183,121,31,.10);border-radius:8px 8px 0 0;color:var(--gold)}
+.rs td.per,.rs th.per{background:rgba(183,121,31,.05)}
 .rail{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}
 .cd{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:9px 14px;display:flex;align-items:baseline;gap:8px}
 .cd .n{font-family:var(--disp);font-weight:800;font-size:21px;color:var(--cyan);letter-spacing:-.4px}
@@ -56,21 +66,21 @@ header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
 /* tabela */
 .rs-wrap{overflow-x:auto}
 .rs{width:100%;border-collapse:collapse;font-size:12.5px;min-width:980px}
-.rs th{text-align:right;color:var(--muted);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 6px;border-bottom:1px solid var(--grid);white-space:normal;vertical-align:bottom;line-height:1.25}
+.rs th{text-align:right;color:var(--muted);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:6px 5px;border-bottom:1px solid var(--grid);white-space:normal;vertical-align:bottom;line-height:1.25}
 .rs th.sortable{cursor:pointer} .rs th.sorted{color:var(--cyan)}
 .rs th:first-child,.rs td:first-child{text-align:left}
 .rs th:last-child,.rs td:last-child{text-align:left}
-.rs td{padding:8px 6px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;vertical-align:top}
+.rs td{padding:8px 5px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;vertical-align:top}
 .rs td:first-child{color:var(--ink);font-weight:600;white-space:normal;min-width:230px}
 .rs tr:last-child td{border-bottom:0}
 .rs tr.tot td{border-top:2px solid var(--grid);font-weight:700;color:var(--ink)}
 .rs tr.sub td{background:var(--surface-2);font-weight:700;color:var(--ink)}
 .rs td small{color:var(--muted);font-size:10.5px;font-weight:400}
-.rs td small.b{display:block;margin-top:1px}
+.rs td small.b{display:block;margin-top:1px;white-space:normal;max-width:150px;margin-left:auto}
 .rs td.ok{color:var(--green);font-weight:600} .rs td.mid{color:var(--amber);font-weight:600} .rs td.bad{color:var(--red);font-weight:700}
 .rs td.dim{color:var(--muted)} .rs td.hl{background:rgba(0,155,190,.07);font-weight:700;color:var(--ink)}
-.rs td.cad{white-space:normal;min-width:150px;max-width:200px;font-size:11.5px}
-.rs td.nm{white-space:normal;min-width:210px;max-width:260px}
+.rs td.cad{white-space:normal;min-width:120px;max-width:160px;font-size:11.5px}
+.rs td.nm{white-space:normal;min-width:180px;max-width:230px}
 .bdg{font-size:10px;padding:2px 7px;border-radius:6px;font-weight:700;white-space:nowrap;letter-spacing:.04em;display:inline-block}
 .bdg.fr{background:rgba(15,23,42,.06);color:var(--ink-2);font-weight:600}
 .bdg.tp{background:rgba(0,155,190,.12);color:#00718a}
@@ -110,11 +120,19 @@ footer{color:var(--muted);font-size:11.5px;margin-top:22px;text-align:center}
 </header>
 
 <div class="tools">
+  <div class="seg" id="periodo">
+    <button data-p="hoje">Hoje</button><button data-p="ontem">Ontem</button><button data-p="semana">Esta semana</button><button data-p="mes" class="on">Este mês</button><button data-p="tudo">Todo período</button>
+  </div>
+  <input type="date" id="ini" title="Início (personalizado)"> <input type="date" id="fim" title="Fim (personalizado)">
+  <span class="per-lbl" id="per-lbl"></span>
   <input type="search" id="f-busca" placeholder="buscar agente, frente ou cadência">
   <label class="chk"><input type="checkbox" id="f-vazios"> mostrar agentes sem leads</label>
 </div>
 
+<div class="rail-t">Agora</div>
 <div class="rail" id="rail"></div>
+<div class="rail-t" id="rail-per-t">No período</div>
+<div class="rail" id="rail-per"></div>
 <div class="err" id="err"></div>
 
 <div class="card">
@@ -145,7 +163,7 @@ footer{color:var(--muted);font-size:11.5px;margin-top:22px;text-align:center}
 
 <div class="card">
   <div class="card-head">
-    <div><h2>Ações com cupom · Agente de Desconto</h2><div class="hint">Uma linha por campanha, agrupada por ação (template) · janela de 7 dias após o envio: abriu a página da ação, respondeu no WhatsApp, matriculou (1ª parcela, sem renovação) · testes ficam fora</div></div>
+    <div><h2>Ações com cupom · Agente de Desconto</h2><div class="hint">Campanhas com envio no período escolhido, agrupadas por ação (template) · janela de 7 dias após cada envio: abriu a página da ação, respondeu no WhatsApp, matriculou (1ª parcela, sem renovação) · testes ficam fora</div></div>
   </div>
   <div class="rs-wrap"><table class="rs" id="t-campanhas"></table></div>
 </div>
@@ -156,7 +174,7 @@ footer{color:var(--muted);font-size:11.5px;margin-top:22px;text-align:center}
     <div class="note" style="margin-top:0;line-height:1.7">
       <b>Com a IA</b> = conversa em modo IA (a Anne responde se o lead falar) · <b>Parados</b> = adormecida, só um disparo reacende · <b>Com humano</b> = atendimento humano ou Comercial (<small>sem dono</small> = ninguém marcado como responsável).<br>
       <b>Com follow-up</b> = conversas com toque agendado agora; o follow-up só nasce quando a IA conversa e acaba quando a cadência termina, então é normal ser pouco.<br>
-      <b>Follow-ups 7d</b> = toques enviados e cancelados nos últimos 7 dias · <b>Janela 24h</b> = lead falou nas últimas 24h (dá para responder sem template).<br>
+      <b>Colunas "agora"</b> mostram a situação neste momento e não mudam com o período. <b>Colunas "no período"</b> (fundo dourado) contam o que aconteceu entre as datas escolhidas: <b>leads novos</b> = conversas criadas · <b>falaram</b> = leads que mandaram mensagem · <b>follow-ups</b> = toques enviados pelo agente (com % de resposta e cancelados) · <b>escalações</b> = pedidos de humano abertos · <b>vendas</b> = matrículas da Anne (IA, humano, blindado), sem renovação.<br>
       <b>Sem cadência</b> = o agente não tem régua própria: quem para nele fica sem toque nenhum.
     </div>
   </div>
@@ -188,13 +206,37 @@ function relogio(){ $("clock").textContent = new Date().toLocaleString("pt-BR",{
 relogio(); setInterval(relogio, 30000);
 
 let RAW = null;
+// ---------- período (dia calendário de Manaus) ----------
+const hojeManaus = () => new Date(Date.now() - 4*3600e3).toISOString().slice(0,10);
+const addDays = (iso, n) => new Date(Date.parse(iso) + n*86400e3).toISOString().slice(0,10);
+const ddmm = iso => iso ? iso.slice(8,10) + "/" + iso.slice(5,7) : "";
+function calcPeriodo(modo){
+  const h = hojeManaus();
+  if (modo === "hoje") return {ini: h, fim: h};
+  if (modo === "ontem") return {ini: addDays(h,-1), fim: addDays(h,-1)};
+  if (modo === "semana"){ const dow = (new Date(h+"T12:00:00Z").getUTCDay()+6)%7; return {ini: addDays(h,-dow), fim: h}; } // segunda a hoje
+  if (modo === "mes") return {ini: h.slice(0,8)+"01", fim: h};
+  return {ini:null, fim:null};
+}
+let PER = {...calcPeriodo("mes"), modo:"mes"};
+const perTxt = () => PER.modo === "tudo" || !PER.ini ? "todo o período" : PER.ini === PER.fim ? ddmm(PER.ini) : `${ddmm(PER.ini)} a ${ddmm(PER.fim || hojeManaus())}`;
+document.querySelectorAll("#periodo button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#periodo button").forEach(x => x.classList.remove("on")); b.classList.add("on");
+  PER = {...calcPeriodo(b.dataset.p), modo:b.dataset.p}; $("ini").value = PER.ini||""; $("fim").value = PER.fim||""; load();
+}));
+for (const id of ["ini","fim"]) $(id).addEventListener("change", () => {
+  document.querySelectorAll("#periodo button").forEach(x => x.classList.remove("on"));
+  PER = {ini: $("ini").value||null, fim: $("fim").value||$("ini").value||null, modo:"custom"}; load();
+});
+$("ini").value = PER.ini; $("fim").value = PER.fim;
 const SORT = {vendedor:{col:"total",dir:-1}, acoes:{col:"total",dir:-1}, nutricao:{col:"total",dir:-1}};
 for (const id of ["f-busca","f-vazios"]) $(id).addEventListener("input", () => RAW && renderAll(RAW));
 
 async function load(){
   $("wrap").classList.add("loading");
   try{
-    const r = await fetch(API + "?k=" + encodeURIComponent(K));
+    const q = new URLSearchParams({k:K}); if (PER.ini) q.set("ini", PER.ini); if (PER.fim) q.set("fim", PER.fim);
+    const r = await fetch(API + "?" + q.toString());
     const d = await r.json();
     if (d.error) throw new Error(d.error);
     RAW = d;
@@ -217,17 +259,18 @@ function filtrar(list){
     (!q || [a.slug, a.name, a.tipo, frN(a.frente), a.cadencia].some(x => (x||"").toLowerCase().includes(q))));
 }
 
-const COLS = [
-  ["name","Agente"], ["total","Leads"], ["ia","Com a IA"], ["parado","Parados"], ["humano","Com humano"],
-  ["quentes","Quentes"], ["quentes_orfaos","Quentes sem follow-up"], ["com_fu","Com follow-up"], ["fu_feitos_7d","Follow-ups últimos 7d"],
-  ["janela_aberta","Janela 24h"], ["escalacoes_abertas","Escalações abertas"], ["liq_30d","Vendas da Anne 30d"], ["cadencia","Cadência"]
-];
+const COLS_NOW = [["total","Leads"], ["ia","Com a IA"], ["parado","Parados"], ["humano","Com humano"],
+  ["quentes","Quentes"], ["quentes_orfaos","Quentes sem follow-up"], ["com_fu","Follow-up agendado"], ["escalacoes_abertas","Escalações abertas"]];
+const COLS_PER = [["novos_p","Leads novos"], ["falaram_p","Falaram"], ["fu_enviados_p","Follow-ups enviados"], ["escalacoes_p","Escalações"], ["liq_p","Vendas da Anne"]];
+const COLS = [["name","Agente"], ...COLS_NOW, ...COLS_PER, ["cadencia","Cadência"]];
 
 function tabela(id, grupo, list){
   const s = SORT[grupo];
   const val = (a,k) => k === "name" ? (a.name||a.slug).toLowerCase() : k === "cadencia" ? (a.cadencia||"").toLowerCase() : +a[k]||0;
   const rows = list.slice().sort((a,b) => { const x = val(a,s.col), y = val(b,s.col); return (x < y ? -1 : x > y ? 1 : 0) * s.dir; });
-  let t = `<tr>${COLS.map(([k,l]) => `<th class="sortable ${s.col===k ? "sorted" : ""}" data-g="${grupo}" data-col="${k}">${l}${s.col===k ? (s.dir<0 ? " ▾" : " ▴") : ""}</th>`).join("")}</tr>`;
+  const th = ([k,l], per) => `<th class="sortable ${per ? "per " : ""}${s.col===k ? "sorted" : ""}" data-g="${grupo}" data-col="${k}">${l}${s.col===k ? (s.dir<0 ? " ▾" : " ▴") : ""}</th>`;
+  let t = `<tr class="grp"><th></th><th class="g-now" colspan="${COLS_NOW.length}">Agora</th><th class="g-per" colspan="${COLS_PER.length}">No período · ${esc(perTxt())}</th><th></th></tr>`
+    + `<tr>${th(COLS[0])}${COLS_NOW.map(c => th(c)).join("")}${COLS_PER.map(c => th(c, true)).join("")}${th(COLS[COLS.length-1])}</tr>`;
   for (const a of rows){
     const semCad = !a.cadencia;
     const bdgs = [`<span class="bdg tp">${esc(a.tipo)}</span>`, a.frente && frN(a.frente) !== a.tipo ? `<span class="bdg fr">${esc(frN(a.frente))}</span>` : "",
@@ -242,18 +285,21 @@ function tabela(id, grupo, list){
       <td>${fmtN(a.quentes)}<small class="b">${fmtN(a.mornos)} mornos</small></td>
       <td class="${a.quentes_orfaos >= 10 ? "bad" : a.quentes_orfaos > 0 ? "mid" : "dim"}">${fmtN(a.quentes_orfaos)}</td>
       <td class="hl">${fmtN(a.com_fu)}${a.prox_fu ? `<small class="b">próx. ${hora(a.prox_fu)}</small>` : ""}</td>
-      <td>${fmtN(a.fu_feitos_7d)} enviados<small class="b">${a.fu_cancelados_7d ? fmtN(a.fu_cancelados_7d) + " cancelados" : ""}</small></td>
-      <td class="${a.janela_aberta ? "" : "dim"}">${fmtN(a.janela_aberta)}</td>
       <td class="${a.escalacoes_abertas ? "mid" : "dim"}">${fmtN(a.escalacoes_abertas)}</td>
-      <td class="${a.vendas_30d ? "ok" : "dim"}">${a.vendas_30d ? `${fmtR(a.liq_30d)}<small class="b">${fmtN(a.vendas_30d)} vendas${a.vendas_7d ? " · " + fmtN(a.vendas_7d) + " em 7d" : ""}</small>` : "—"}</td>
+      <td class="per ${a.novos_p ? "" : "dim"}">${fmtN(a.novos_p)}</td>
+      <td class="per ${a.falaram_p ? "" : "dim"}">${fmtN(a.falaram_p)}</td>
+      <td class="per ${a.fu_enviados_p ? "" : "dim"}">${fmtN(a.fu_enviados_p)}${a.fu_enviados_p ? `<small class="b">${fmtPct(pct(a.fu_respondidos_p, a.fu_enviados_p))} resp.${a.fu_cancelados_p ? " · " + fmtN(a.fu_cancelados_p) + " cancel." : ""}</small>` : (a.fu_cancelados_p ? `<small class="b">${fmtN(a.fu_cancelados_p)} cancel.</small>` : "")}</td>
+      <td class="per ${a.escalacoes_p ? "" : "dim"}">${fmtN(a.escalacoes_p)}</td>
+      <td class="per ${a.vendas_p ? "ok" : "dim"}">${a.vendas_p ? `${fmtR(a.liq_p)}<small class="b">${fmtN(a.vendas_p)} venda${a.vendas_p > 1 ? "s" : ""}${a.sem_liq_p ? ` · ${a.sem_liq_p} sem líquido ainda · bruto ${fmtR(a.bruto_p)}` : ""}</small>` : "—"}</td>
       <td class="cad">${semCad ? `<span class="bdg semcad">sem cadência</span>` : `${esc(a.cadencia)}<small class="b">${a.passos} passos${a.cadencia_ativa ? "" : " · inativa"}</small>`}</td>
     </tr>`;
   }
   t += `<tr class="tot"><td>Total · ${fmtN(rows.length)} agentes</td><td>${fmtN(soma(rows,"total"))}</td><td>${fmtN(soma(rows,"ia"))}</td><td>${fmtN(soma(rows,"parado"))}</td>
     <td>${fmtN(soma(rows,"humano"))}${soma(rows,"humano_sem_dono") ? ` <small>${fmtN(soma(rows,"humano_sem_dono"))} sem dono</small>` : ""}</td>
-    <td>${fmtN(soma(rows,"quentes"))} <small>${fmtN(soma(rows,"mornos"))} mornos</small></td><td>${fmtN(soma(rows,"quentes_orfaos"))}</td><td>${fmtN(soma(rows,"com_fu"))}</td>
-    <td>${fmtN(soma(rows,"fu_feitos_7d"))}</td><td>${fmtN(soma(rows,"janela_aberta"))}</td><td>${fmtN(soma(rows,"escalacoes_abertas"))}</td>
-    <td>${fmtN(soma(rows,"vendas_30d"))} · ${fmtR(soma(rows,"liq_30d"))}</td><td></td></tr>`;
+    <td>${fmtN(soma(rows,"quentes"))} <small>${fmtN(soma(rows,"mornos"))} mornos</small></td><td>${fmtN(soma(rows,"quentes_orfaos"))}</td><td>${fmtN(soma(rows,"com_fu"))}</td><td>${fmtN(soma(rows,"escalacoes_abertas"))}</td>
+    <td class="per">${fmtN(soma(rows,"novos_p"))}</td><td class="per">${fmtN(soma(rows,"falaram_p"))}</td>
+    <td class="per">${fmtN(soma(rows,"fu_enviados_p"))}<small class="b">${fmtPct(pct(soma(rows,"fu_respondidos_p"), soma(rows,"fu_enviados_p")))} resp.</small></td>
+    <td class="per">${fmtN(soma(rows,"escalacoes_p"))}</td><td class="per">${fmtR(soma(rows,"liq_p"))}<small class="b">${fmtN(soma(rows,"vendas_p"))} vendas</small></td><td></td></tr>`;
   $(id).innerHTML = rows.length ? t : `<tr><td>Nenhum agente neste grupo com o filtro atual.</td></tr>`;
 }
 
@@ -271,7 +317,15 @@ function renderAll(d){
     <div class="cd"><span class="n warn">${fmtN(q)}</span><span class="l">quentes sem compra</span></div>
     <div class="cd"><span class="n bad">${fmtN(orf)}</span><span class="l">quentes sem follow-up e sem humano</span></div>
     <div class="cd"><span class="n">${fmtN(soma(all,"escalacoes_abertas"))}</span><span class="l">escalações abertas</span></div>
-    <div class="cd"><span class="n gold">${fmtR(soma(all,"liq_30d"))}</span><span class="l">vendas da Anne · 30 dias (${fmtN(soma(all,"vendas_30d"))})</span></div>`;
+    <div class="cd"><span class="n">${fmtN(soma(all,"janela_aberta"))}</span><span class="l">com janela de 24h aberta</span></div>`;
+  const fe = soma(all,"fu_enviados_p");
+  $("rail-per-t").textContent = "No período · " + perTxt();
+  $("per-lbl").innerHTML = `período: <b>${esc(perTxt())}</b>`;
+  $("rail-per").innerHTML = `<div class="cd"><span class="n">${fmtN(soma(all,"novos_p"))}</span><span class="l">leads novos</span></div>
+    <div class="cd"><span class="n">${fmtN(soma(all,"falaram_p"))}</span><span class="l">leads que falaram</span></div>
+    <div class="cd"><span class="n">${fmtN(fe)}</span><span class="l">follow-ups enviados · ${fmtPct(pct(soma(all,"fu_respondidos_p"), fe))} responderam</span></div>
+    <div class="cd"><span class="n">${fmtN(soma(all,"escalacoes_p"))}</span><span class="l">escalações abertas no período</span></div>
+    <div class="cd"><span class="n gold">${fmtR(soma(all,"liq_p"))}</span><span class="l">vendas da Anne · líquido (${fmtN(soma(all,"vendas_p"))})${soma(all,"sem_liq_p") ? ` · ${fmtN(soma(all,"sem_liq_p"))} sem líquido ainda, entra às 06h30 · bruto ${fmtR(soma(all,"bruto_p"))}` : ""}</span></div>`;
 
   // alertas automáticos
   const al = [];
@@ -319,7 +373,7 @@ function renderAll(d){
   const E = soma(camps,"enviados");
   t += `<tr class="tot"><td>Total · ${fmtN(camps.length)} campanhas</td><td></td><td></td><td>${fmtN(soma(camps,"base"))}</td><td>${fmtN(E)}</td><td>${fmtN(soma(camps,"abriram"))} <small>${fmtPct(pct(soma(camps,"abriram"),E))}</small></td>
     <td>${fmtN(soma(camps,"responderam"))} <small>${fmtPct(pct(soma(camps,"responderam"),E))}</small></td><td>${fmtN(soma(camps,"vendas"))}</td><td>${fmtR(soma(camps,"liq"))}</td><td></td></tr>`;
-  $("t-campanhas").innerHTML = camps.length ? t : `<tr><td>Nenhuma campanha do Agente de Desconto ainda.</td></tr>`;
+  $("t-campanhas").innerHTML = camps.length ? t : `<tr><td>Nenhuma campanha do Agente de Desconto com envio em ${esc(perTxt())}.</td></tr>`;
 
   // cadências sem uso
   const cs = d.cadencias_sem_uso || [];
